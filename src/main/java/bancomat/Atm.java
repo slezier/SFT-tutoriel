@@ -2,14 +2,25 @@ package bancomat;
 
 public class Atm {
 
-    public Atm() {
+    private final Bank bank;
+    private int funds;
+    private SessionDab currentSession;
+
+    public Atm(int initialFunds,Bank bank) {
+        this.bank = bank;
+        funds = initialFunds;
     }
 
     public SessionDab authenticate(User user) {
-        return null;
+        currentSession = new SessionDab(bank.getAccount(user),this);
+        return currentSession;
     }
 
     public boolean returnCard() {
-        return false;
+        return currentSession == null;
+    }
+
+    public void ejectCard() {
+        currentSession=null;
     }
 }

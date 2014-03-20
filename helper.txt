@@ -43,26 +43,26 @@ And the ATM should say the card has been retained
 
 
    Scenario 1:accountHasSufficientFunds
-givenTheAccountBalanceIs \$100
-andTheCardIsValid
-andTheMachineContainsEnoughMoney
-whenTheAccount HolderRequests \$20
-thenTheAtmShould dIspense \$20
-andTheAccountBalanceShouldBe \$80
-andTheCardShouldBeReturned
+//givenTheAccountBalanceIs100Dollars
+//andTheCardIsValid
+//andTheMachineContainsEnoughMoney
+//whenTheAccountHolderRequests20Dollars
+//thenTheAtmShouldDispense20Dollars
+//andTheAccountBalanceShouldBe80Dollars
+//andTheCardShouldBeReturned
 
    Scenario 2: accountHasInSufficientFunds
-pivenTheAccountBalanceIs \$10
-andTheCardIsValid
-andTheMachineContainsEnoughMoney
-whenTheAccount HolderRequests \$20
-thenTheAtmShould not dIspenseAnyMoney
-andTheAtmShouldSayThereAreInSufficientFunds
-andTheAccountBalanceShouldBe \$20
-andTheCardShouldBeReturned
+//pivenTheAccountBalanceIs \$10
+//andTheCardIsValid
+//andTheMachineContainsEnoughMoney
+//whenTheAccountHolderRequests \$20
+//thenTheAtmShouldNotDispenseAnyMoney
+//andTheAtmShouldSayThereAreInSufficientFunds
+//andTheAccountBalanceShouldBe \$20
+//andTheCardShouldBeReturned
 
 Scenario 3:cardHasBeenDisabled
-givenTheCardIsDisabled
-whenTheAccountHolderRequests \$20
-thenTheAtmShouldRetainTheCard
-andTheAtmShouldSayTheCardHasBeenRetained
+//givenTheCardIsDisabled
+//whenTheAccountHolderRequests \$20
+//thenTheAtmShouldRetainTheCard
+//andTheAtmShouldSayTheCardHasBeenRetained
