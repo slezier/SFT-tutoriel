@@ -11,8 +11,19 @@ public class SessionDab {
     }
 
     public int withdraw(int amount) {
-        account.withdraw(amount);
+        final int cash ;
+        if( account.cardIsLost()){
+            cash = 0;
+            atm.eatTheCard();
+            atm.displays("The card has been retained");
+        }else if( account.balance() <= amount ){
+            cash = 0;
+            atm.displays("insufficient funds");
+        }else {
+            cash = amount;
+            account.withdraw(amount);
+        }
         atm.ejectCard();
-        return amount;
+        return cash;
     }
 }

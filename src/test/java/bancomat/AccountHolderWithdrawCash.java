@@ -4,8 +4,10 @@ package bancomat;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import sft.SimpleFunctionalTest;
+import sft.Text;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 
@@ -26,32 +28,64 @@ public class AccountHolderWithdrawCash {
 
     @Test
     public void accountHasSufficientFunds() {
-        givenTheAccountBalanceIs100Dollars();
+        givenTheAccountBalanceIs(100);
         andTheCardIsValid();
         andTheMachineContainsEnoughMoney();
 
-        whenTheAccountHolderRequests20Dollars();
+        whenTheAccountHolderRequests(20);
 
-        thenTheAtmShouldDispense20Dollars();
-        andTheAccountBalanceShouldBe80Dollars();
+        thenTheAtmShouldDispense(20);
+        andTheAccountBalanceShouldBe(80);
         andTheCardShouldBeReturned();
+    }
+
+    @Test
+    public void accountHasInSufficientFunds(){
+        givenTheAccountBalanceIs(10);
+        andTheCardIsValid();
+        andTheMachineContainsEnoughMoney();
+
+        whenTheAccountHolderRequests(20);
+
+        thenTheAtmShouldNotDispenseAnyMoney();
+        andTheAtmShouldSayThereAreInSufficientFunds();
+        andTheAccountBalanceShouldBe(10);
+        andTheCardShouldBeReturned();
+    }
+
+    @Test
+    public void  cardHasBeenDisabled(){
+        givenTheCardIsDisabled();
+        whenTheAccountHolderRequests(20);
+        thenTheAtmShouldRetainTheCard();
+        andTheAtmShouldSayTheCardHasBeenRetained();
+    }
+
+
+
+    private void givenTheCardIsDisabled() {
+        account.addValidCreditCard("1234");
+        account.declareCardLoss();
+    }
+
+    private void andTheAtmShouldSayThereAreInSufficientFunds() {
+        assertEquals(atm.getDisplay(),"insufficient funds");
+    }
+
+    private void thenTheAtmShouldNotDispenseAnyMoney() {
+        assertEquals(withdrawals,0);
     }
 
     private void andTheCardShouldBeReturned() {
         assertTrue("Card not returned", atm.returnCard());
     }
 
-    private void andTheAccountBalanceShouldBe80Dollars() {
-        assertEquals(account.balance(), 80);
+    private void thenTheAtmShouldRetainTheCard() {
+        assertFalse("Card returned", atm.returnCard());
     }
 
-    private void thenTheAtmShouldDispense20Dollars() {
-        assertEquals(withdrawals, 20);
-    }
-
-    private void whenTheAccountHolderRequests20Dollars() {
-        atmSession = atm.authenticate(user);
-        withdrawals = atmSession.withdraw(20);
+    private void andTheAtmShouldSayTheCardHasBeenRetained() {
+        assertEquals(atm.getDisplay(),"The card has been retained");
     }
 
     private void andTheMachineContainsEnoughMoney() {
@@ -62,10 +96,27 @@ public class AccountHolderWithdrawCash {
         account.addValidCreditCard("1234");
     }
 
-    private void givenTheAccountBalanceIs100Dollars() {
+    @Text("And the account balance should be ${balance} $")
+    private void andTheAccountBalanceShouldBe(int balance) {
+        assertEquals(account.balance(), balance);
+    }
+
+    @Text("Then the atm should dispense  ${cash} $")
+    private void thenTheAtmShouldDispense(int cash) {
+        assertEquals(withdrawals, cash);
+    }
+
+    @Text("When the account holder requests ${amount} $")
+    private void whenTheAccountHolderRequests(int amount) {
+        atmSession = atm.authenticate(user);
+        withdrawals = atmSession.withdraw(amount);
+    }
+
+    @Text("Given the account balance is ${initialAmount} $")
+    private void givenTheAccountBalanceIs(int initialAmount) {
         bank = new Bank();
         user = new User();
-        account = bank.createAccount(user, 100);
+        account = bank.createAccount(user, initialAmount);
     }
 
 }
