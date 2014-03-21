@@ -18,7 +18,7 @@ public class SessionDab {
             atm.displays("The card has been retained");
         }else if( account.balance() <= amount ){
             cash = 0;
-            atm.displays("insufficient funds");
+            atm.displays("Insufficient funds");
         }else {
             cash = amount;
             account.withdraw(amount);
