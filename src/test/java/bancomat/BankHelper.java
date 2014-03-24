@@ -14,11 +14,18 @@ public class BankHelper {
     private SessionDab atmSession;
     public int withdrawals;
 
+
     @Text("Given the account balance is ${initialAmount} $")
     public void givenTheAccountBalanceIs(int initialAmount) {
-        bank = new Bank();
-        user = new User();
         account = bank.createAccount(user, initialAmount);
+    }
+
+    public void givenAClientOfThisBank() {
+        user = new User();
+    }
+
+    public void givenABank() {
+        bank = new Bank();
     }
 
     public void andTheCardIsValid() {
