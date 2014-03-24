@@ -50,4 +50,8 @@ public class BankHelper {
     public void andTheCardShouldBeReturned() {
         assertTrue("Card not returned", atm.returnCard());
     }
+
+    public String getHtmlTicket() {
+        return "<pre width='25em'>"+atm.ticket()+ "</pre>";
+    }
 }

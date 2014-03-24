@@ -3,6 +3,7 @@ package bancomat;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import sft.Displayable;
 import sft.FixturesHelper;
 import sft.Text;
 
@@ -13,6 +14,8 @@ public class AccountHolderWithdrawCashAlternateCases {
 
     @FixturesHelper
     private static BankHelper bankHelper = new BankHelper();
+    @Displayable
+    private String ticket;
 
     @BeforeClass
     public static void setupUseCase(){
@@ -54,6 +57,7 @@ public class AccountHolderWithdrawCashAlternateCases {
 
     @Text("And the atm should displays \"${expectedDisplay}\"")
     private void andTheAtmShouldDisplay(String expectedDisplay) {
+        this.ticket= bankHelper.getHtmlTicket();
         assertEquals(bankHelper.atm.getDisplay(), expectedDisplay);
     }
 

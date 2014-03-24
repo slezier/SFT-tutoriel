@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import sft.Displayable;
 import sft.FixturesHelper;
 import sft.SimpleFunctionalTest;
 import sft.Text;
@@ -23,6 +24,8 @@ public class AccountHolderWithdrawCash {
     public AccountHolderWithdrawCashAlternateCases accountHolderWithdrawCashAlternateCases = new AccountHolderWithdrawCashAlternateCases();
     @FixturesHelper
     private static BankHelper bankHelper = new BankHelper();
+    @Displayable
+    private String ticket;
 
     @BeforeClass
     public static void setupUseCase(){
@@ -48,6 +51,7 @@ public class AccountHolderWithdrawCash {
 
     @Text("Then the atm should dispense  ${cash} $")
     private void thenTheAtmShouldDispense(int cash) {
+        this.ticket= bankHelper.getHtmlTicket();
         assertEquals(bankHelper.withdrawals, cash);
     }
 }
