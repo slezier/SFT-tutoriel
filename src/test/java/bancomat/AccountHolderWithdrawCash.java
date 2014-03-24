@@ -48,7 +48,7 @@ public class AccountHolderWithdrawCash {
         whenTheAccountHolderRequests(20);
 
         thenTheAtmShouldNotDispenseAnyMoney();
-        andTheAtmShouldSayThereAreInSufficientFunds();
+        andTheAtmShouldDisplay("insufficient funds");
         andTheAccountBalanceShouldBe(10);
         andTheCardShouldBeReturned();
     }
@@ -58,7 +58,7 @@ public class AccountHolderWithdrawCash {
         givenTheCardIsDisabled();
         whenTheAccountHolderRequests(20);
         thenTheAtmShouldRetainTheCard();
-        andTheAtmShouldSayTheCardHasBeenRetained();
+        andTheAtmShouldDisplay("The card has been retained");
     }
 
 
@@ -66,10 +66,6 @@ public class AccountHolderWithdrawCash {
     private void givenTheCardIsDisabled() {
         account.addValidCreditCard("1234");
         account.declareCardLoss();
-    }
-
-    private void andTheAtmShouldSayThereAreInSufficientFunds() {
-        assertEquals(atm.getDisplay(),"insufficient funds");
     }
 
     private void thenTheAtmShouldNotDispenseAnyMoney() {
@@ -84,8 +80,9 @@ public class AccountHolderWithdrawCash {
         assertFalse("Card returned", atm.returnCard());
     }
 
-    private void andTheAtmShouldSayTheCardHasBeenRetained() {
-        assertEquals(atm.getDisplay(),"The card has been retained");
+    @Text("And the atm should displays \"${expectedDisplay}\"")
+    private void andTheAtmShouldDisplay(String expectedDisplay) {
+        assertEquals(atm.getDisplay(), expectedDisplay);
     }
 
     private void andTheMachineContainsEnoughMoney() {
