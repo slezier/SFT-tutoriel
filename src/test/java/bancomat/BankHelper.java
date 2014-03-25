@@ -52,6 +52,6 @@ public class BankHelper {
     }
 
     public String getHtmlTicket() {
-        return "<pre width='25em'>"+atm.ticket()+ "</pre>";
+        return "ticket:<pre width='25em'>"+atm.ticket()+ "</pre>";
     }
 }
