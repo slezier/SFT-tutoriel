@@ -5,10 +5,13 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import sft.Decorate;
 import sft.Displayable;
 import sft.FixturesHelper;
 import sft.SimpleFunctionalTest;
 import sft.Text;
+import sft.decorators.Group;
+import sft.decorators.TableOfContent;
 
 import static org.junit.Assert.assertEquals;
 
@@ -19,6 +22,7 @@ I want to withdraw cash from an ATM <br/>
 So that I can get money when the bank is closed
 */
 @RunWith(SimpleFunctionalTest.class)
+@Decorate(decorator = TableOfContent.class)
 public class AccountHolderWithdrawCash {
 
     public AccountHolderWithdrawCashAlternateCases accountHolderWithdrawCashAlternateCases = new AccountHolderWithdrawCashAlternateCases();
@@ -38,18 +42,19 @@ public class AccountHolderWithdrawCash {
 
     @Test
     public void accountHasSufficientFunds() {
-        bankHelper.givenTheAccountBalanceIs(100);
+        bankHelper.theAccountBalanceIs(100);
         bankHelper.andTheCardIsValid();
         bankHelper.andTheMachineContainsEnoughMoney();
 
-        bankHelper.whenTheAccountHolderRequests(20);
+        bankHelper.theAccountHolderRequests(20);
 
         thenTheAtmShouldDispense(20);
         bankHelper.andTheAccountBalanceShouldBe(80);
         bankHelper.andTheCardShouldBeReturned();
     }
 
-    @Text("Then the atm should dispense  ${cash} $")
+    @Decorate(decorator = Group.class,parameters = BankHelper.THEN)
+    @Text("The atm should dispense  ${cash} $")
     private void thenTheAtmShouldDispense(int cash) {
         this.ticket= bankHelper.getHtmlTicket();
         assertEquals(bankHelper.withdrawals, cash);
