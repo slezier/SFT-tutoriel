@@ -19,7 +19,10 @@ public class SessionDab {
         }else if( account.balance() <= amount ){
             cash = 0;
             atm.displaysAndWriteTicket("Insufficient funds", withdrawTicketStart(amount) + " forbidden: insufficient funds\n\nActual balance: "+account.balance());
-        }else {
+        }else if(! account.canWithdraw()){
+            cash=0;
+            atm.displaysAndWriteTicket("Maximum withdraws reach", withdrawTicketStart(amount) + " forbidden: maximum withdraws reached\n\n Actual balance: " + account.balance());
+        }else{
             cash = amount;
             account.withdraw(amount);
             atm.displaysAndWriteTicket("Bye", withdrawTicketStart(amount) + " ok\n\nActual balance: " + account.balance());
