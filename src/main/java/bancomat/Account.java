@@ -5,6 +5,7 @@ public class Account {
 
     private int balance;
     private boolean cardIsValid = false;
+    private int maximumWithdraws = 20;
 
     public Account(int initialAmount) {
         balance = initialAmount;
@@ -19,10 +20,10 @@ public class Account {
     }
 
     public void withdraw(int amount) {
+        maximumWithdraws--;
         this.balance -=amount;
 
     }
-
 
     public boolean cardIsLost() {
         return ! cardIsValid;
@@ -30,5 +31,13 @@ public class Account {
 
     public void declareCardLoss() {
         cardIsValid=false;
+    }
+
+    public void maximumWithdrawsPerDay(int maximumWithdraws) {
+        this.maximumWithdraws= maximumWithdraws;
+    }
+
+    public boolean canWithdraw() {
+        return maximumWithdraws>0;
     }
 }

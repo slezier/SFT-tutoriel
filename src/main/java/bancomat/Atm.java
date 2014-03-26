@@ -7,6 +7,7 @@ public class Atm {
     private SessionDab currentSession;
     private SessionDab retainedCard;
     private String message;
+    private String ticket;
 
     public Atm(int initialFunds, Bank bank) {
         this.bank = bank;
@@ -31,11 +32,16 @@ public class Atm {
 
     }
 
-    public void displays(String text) {
+    public void displaysAndWriteTicket(String text, String ticket) {
         message=text;
+        this.ticket = ticket;
     }
 
     public void eatTheCard() {
         retainedCard = currentSession;
+    }
+
+    public String ticket() {
+        return ticket;
     }
 }

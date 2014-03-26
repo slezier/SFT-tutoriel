@@ -48,7 +48,7 @@ public class AccountHolderWithdrawCash {
         whenTheAccountHolderRequests(20);
 
         thenTheAtmShouldNotDispenseAnyMoney();
-        andTheAtmShouldDisplay("insufficient funds");
+        andTheAtmShouldDisplay("Insufficient funds");
         andTheAccountBalanceShouldBe(10);
         andTheCardShouldBeReturned();
     }
