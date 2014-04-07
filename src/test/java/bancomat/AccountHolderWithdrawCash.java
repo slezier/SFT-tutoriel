@@ -4,6 +4,7 @@ package bancomat;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import sft.SimpleFunctionalTest;
+import sft.Text;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -41,14 +42,17 @@ public class AccountHolderWithdrawCash {
         assertTrue("Card not returned", atm.returnCard());
     }
 
+    @Text("And the account balance should be 80$")
     private void andTheAccountBalanceShouldBe80Dollars() {
         assertEquals(account.balance(), 80);
     }
 
+    @Text("Then the atm should dispense 20$")
     private void thenTheAtmShouldDispense20Dollars() {
         assertEquals(withdrawals, 20);
     }
 
+    @Text("When the account holder requests 20$")
     private void whenTheAccountHolderRequests20Dollars() {
         atmSession = atm.authenticate(user);
         withdrawals = atmSession.withdraw(20);
@@ -62,6 +66,7 @@ public class AccountHolderWithdrawCash {
         account.addValidCreditCard("1234");
     }
 
+    @Text("Given the account balance is 100$")
     private void givenTheAccountBalanceIs100Dollars() {
         bank = new Bank();
         user = new User();
