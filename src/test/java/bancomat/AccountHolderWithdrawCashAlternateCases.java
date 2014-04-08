@@ -28,7 +28,7 @@ public class AccountHolderWithdrawCashAlternateCases {
 
     @Test
     public void  cardHasBeenDisabled(){
-        bankHelper.givenTheAccountBalanceIs(10);
+        bankHelper.givenTheAccountBalanceIs(200);
         givenTheCardIsDisabled();
         bankHelper.andTheMachineContainsEnoughMoney();
         bankHelper.whenTheAccountHolderRequests(20);
