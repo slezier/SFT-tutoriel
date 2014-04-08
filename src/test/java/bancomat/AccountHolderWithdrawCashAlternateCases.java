@@ -28,7 +28,9 @@ public class AccountHolderWithdrawCashAlternateCases {
 
     @Test
     public void  cardHasBeenDisabled(){
+        bankHelper.givenTheAccountBalanceIs(10);
         givenTheCardIsDisabled();
+        bankHelper.andTheMachineContainsEnoughMoney();
         bankHelper.whenTheAccountHolderRequests(20);
         thenTheAtmShouldRetainTheCard();
         andTheAtmShouldDisplay("The card has been retained");
