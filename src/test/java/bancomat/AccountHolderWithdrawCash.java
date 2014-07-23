@@ -5,13 +5,9 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import sft.Decorate;
-import sft.Displayable;
-import sft.FixturesHelper;
-import sft.SimpleFunctionalTest;
-import sft.Text;
-import sft.decorators.Group;
+import sft.*;
 import sft.decorators.TableOfContent;
+import sft.plugins.sequenceDiagramPlugin.SequenceDiagram;
 
 import static org.junit.Assert.assertEquals;
 
@@ -23,6 +19,7 @@ So that I can get money when the bank is closed
 */
 @RunWith(SimpleFunctionalTest.class)
 @Decorate(decorator = TableOfContent.class)
+@Using(CustomConfiguration.class)
 public class AccountHolderWithdrawCash {
 
     public AccountHolderWithdrawCashAlternateCases accountHolderWithdrawCashAlternateCases = new AccountHolderWithdrawCashAlternateCases();
@@ -46,16 +43,16 @@ public class AccountHolderWithdrawCash {
         bankHelper.andTheCardIsValid();
         bankHelper.andTheMachineContainsEnoughMoney();
 
-        bankHelper.theAccountHolderRequests(20);
+        bankHelper.requestCash(20);
 
-        thenTheAtmShouldDispense(20);
+        dispenseCash(20);
         bankHelper.andTheAccountBalanceShouldBe(80);
-        bankHelper.andTheCardShouldBeReturned();
+        bankHelper.cardIsReturned();
     }
 
-    @Decorate(decorator = Group.class,parameters = BankHelper.THEN)
-    @Text("The atm should dispense  ${cash} $")
-    private void thenTheAtmShouldDispense(int cash) {
+    @Decorate(decorator = SequenceDiagram.class,parameters = "atm --> account_holder")
+    @Text("dispenses ${cash} $")
+    private void dispenseCash(int cash) {
         this.ticket= bankHelper.getHtmlTicket();
         assertEquals(bankHelper.withdrawals, cash);
     }
