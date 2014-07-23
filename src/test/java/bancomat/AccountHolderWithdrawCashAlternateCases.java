@@ -3,7 +3,10 @@ package bancomat;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import sft.*;
+import sft.Decorate;
+import sft.Displayable;
+import sft.FixturesHelper;
+import sft.Text;
 import sft.decorators.Breadcrumb;
 import sft.decorators.Group;
 import sft.decorators.Table;
@@ -35,20 +38,19 @@ public class AccountHolderWithdrawCashAlternateCases {
         bankHelper.andTheCardIsValid();
         bankHelper.andTheMachineContainsEnoughMoney();
 
-
-        bankHelper.requestCash(20);
+        bankHelper.theAccountHolderRequests(20);
 
         theAtmShouldNotDispenseAnyMoney();
         andTheAtmShouldDisplay("Insufficient funds");
         bankHelper.andTheAccountBalanceShouldBe(10);
-        bankHelper.cardIsReturned();
+        bankHelper.andTheCardShouldBeReturned();
     }
 
     @Test
     public void  cardHasBeenDisabled(){
         bankHelper.andTheMachineContainsEnoughMoney();
         theCardIsDisabled();
-        bankHelper.requestCash(20);
+        bankHelper.theAccountHolderRequests(20);
         theAtmShouldRetainTheCard();
         andTheAtmShouldDisplay("The card has been retained");
     }
@@ -74,7 +76,7 @@ public class AccountHolderWithdrawCashAlternateCases {
 
     @Decorate(decorator = Table.class,parameters = "withdraws and cash received per visit")
     private void whenTheAccountHolderRequestsThenTheAtmProvidesCash(int amount, int cash) {
-        bankHelper.requestCash(amount);
+        bankHelper.theAccountHolderRequests(amount);
         assertEquals(cash,bankHelper.withdrawals);
         this.ticket= bankHelper.getHtmlTicket();
     }

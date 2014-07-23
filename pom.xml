@@ -29,11 +29,6 @@
             <artifactId>SimpleFunctionalTest</artifactId>
             <version>1.8</version>
         </dependency>
-        <dependency>
-            <groupId>com.github.slezier</groupId>
-            <artifactId>SequenceDiagramPlugin</artifactId>
-            <version>0.1</version>
-        </dependency>
     </dependencies>
 
 </project>
